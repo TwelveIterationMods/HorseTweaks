@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "minecraft:saddle"
+  },
+  "type": "horsetweaks:saddle_upgrade",
+  "upgrade": "leaf_walker",
+  "ingredients": [
+    {
+      "item": "minecraft:saddle"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "treeLeaves"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "treeLeaves"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "recipes": {
+    "saddle_upgrade": "net.blay09.mods.horsetweaks.crafting.ShapelessSaddleRecipeFactory"
+  }
+}

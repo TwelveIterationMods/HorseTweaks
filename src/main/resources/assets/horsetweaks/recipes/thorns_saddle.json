@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "minecraft:saddle"
+  },
+  "type": "horsetweaks:saddle_upgrade",
+  "upgrade": "thorns",
+  "ingredients": [
+    {
+      "item": "minecraft:saddle"
+    },
+    {
+      "item": "minecraft:cactus"
+    },
+    {
+      "item": "minecraft:cactus"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ]
+}

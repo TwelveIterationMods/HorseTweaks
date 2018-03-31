@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "minecraft:saddle"
+  },
+  "type": "horsetweaks:saddle_upgrade",
+  "upgrade": "swimming",
+  "ingredients": [
+    {
+      "item": "minecraft:saddle"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "slabWood"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "slabWood"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ]
+}

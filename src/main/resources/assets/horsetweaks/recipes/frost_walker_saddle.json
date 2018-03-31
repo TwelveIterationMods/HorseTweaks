@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "minecraft:saddle"
+  },
+  "type": "horsetweaks:saddle_upgrade",
+  "upgrade": "frost_walker",
+  "ingredients": [
+    {
+      "item": "minecraft:saddle"
+    },
+    {
+      "type": "minecraft:item_nbt",
+      "item": "minecraft:enchanted_book",
+      "nbt": "{StoredEnchantments:[{id:9s,lvl:1s}]}"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ]
+}

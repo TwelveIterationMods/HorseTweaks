@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "minecraft:saddle"
+  },
+  "type": "horsetweaks:saddle_upgrade",
+  "upgrade": "easy_jump",
+  "ingredients": [
+    {
+      "item": "minecraft:saddle"
+    },
+    {
+      "item": "minecraft:slime_ball"
+    },
+    {
+      "item": "minecraft:slime_ball"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ]
+}
