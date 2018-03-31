@@ -20,7 +20,7 @@ public class SaddleRightClickHandler {
 
         if (event.getTarget() instanceof EntityHorse) {
             EntityHorse horse = (EntityHorse) event.getTarget();
-            if (HorseTweaksConfig.instantTameInCreative && !horse.isTame() && !(event.getEntityPlayer() instanceof FakePlayer)) {
+            if (HorseTweaksConfig.instantTameInCreative && !horse.isTame() && !(event.getEntityPlayer() instanceof FakePlayer) && event.getEntityPlayer().capabilities.isCreativeMode) {
                 horse.setTamedBy(event.getEntityPlayer());
             }
             if (horse.isTame()) {
