@@ -1,5 +1,6 @@
 package net.blay09.mods.horsetweaks;
 
+import net.blay09.mods.horsetweaks.tweaks.FireResistanceHandler;
 import net.blay09.mods.horsetweaks.tweaks.FrostWalkerHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityHorse;
@@ -11,6 +12,7 @@ public class PlayerTickHandler {
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         FrostWalkerHandler.onPlayerTick(event);
+        FireResistanceHandler.onPlayerTick(event);
 
         Entity entity = event.player.getRidingEntity();
         if (entity instanceof EntityHorse) {

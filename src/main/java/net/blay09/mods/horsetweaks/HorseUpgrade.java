@@ -9,7 +9,8 @@ public enum HorseUpgrade {
     THORNS,
     FROST_WALKER,
     LEAF_WALKER,
-    FEATHER_FALL;
+    FEATHER_FALL,
+    FIRE_RESISTANCE;
 
     public static final HorseUpgrade[] values = values();
 

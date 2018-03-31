@@ -20,7 +20,7 @@ public class SwimmingHandler {
         EntityPlayerSP player = FMLClientHandler.instance().getClientPlayerEntity();
         if (player != null && player.getRidingEntity() instanceof EntityHorse) {
             EntityHorse horse = (EntityHorse) player.getRidingEntity();
-            if (horse.isInWater() && (HorseTweaksConfig.swimmingByDefault || HorseUpgradeHelper.hasUpgrade(horse, HorseUpgrade.SWIMMING))) {
+            if ((horse.isInLava() || horse.isInWater()) && (HorseTweaksConfig.swimmingByDefault || HorseUpgradeHelper.hasUpgrade(horse, HorseUpgrade.SWIMMING))) {
                 horse.addVelocity(0f, 0.0125f, 0f);
             }
         }

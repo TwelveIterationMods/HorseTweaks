@@ -3,19 +3,17 @@
     "item": "minecraft:saddle"
   },
   "type": "horsetweaks:saddle_upgrade",
-  "upgrade": "swimming",
+  "upgrade": "fire_resistance",
   "ingredients": [
     {
       "item": "minecraft:saddle",
       "data": 32767
     },
     {
-      "type": "forge:ore_dict",
-      "ore": "plankWood"
+      "item": "minecraft:magma_cream"
     },
     {
-      "type": "forge:ore_dict",
-      "ore": "plankWood"
+      "item": "minecraft:magma_cream"
     },
     {
       "item": "minecraft:leather"

@@ -1,0 +1,30 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all"
+  },
+  "variants": {
+    "age": {
+      "0": {
+        "textures": {
+          "all": "horsetweaks:blocks/crumbling_magma_0"
+        }
+      },
+      "1": {
+        "textures": {
+          "all": "horsetweaks:blocks/crumbling_magma_1"
+        }
+      },
+      "2": {
+        "textures": {
+          "all": "horsetweaks:blocks/crumbling_magma_2"
+        }
+      },
+      "3": {
+        "textures": {
+          "all": "horsetweaks:blocks/crumbling_magma_3"
+        }
+      }
+    }
+  }
+}

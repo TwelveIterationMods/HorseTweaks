@@ -1,9 +1,11 @@
 package net.blay09.mods.horsetweaks;
 
 import com.google.common.collect.ImmutableList;
+import net.blay09.mods.horsetweaks.blocks.BlockCrumblingMagma;
 import net.blay09.mods.horsetweaks.client.SaddleItemOverrides;
 import net.blay09.mods.horsetweaks.tweaks.*;
 import net.blay09.mods.horsetweaks.network.NetworkHandler;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -12,11 +14,9 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ItemLayerModel;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,6 +30,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Collections;
@@ -61,8 +62,17 @@ public class HorseTweaks {
             for (HorseUpgrade upgrade : HorseUpgrade.values) {
                 list.add(HorseUpgradeHelper.applyUpgrade(saddle.copy(), upgrade));
             }
+
+            ItemStack megaSaddle = saddle.copy();
+            for (HorseUpgrade upgrade : HorseUpgrade.values) {
+                HorseUpgradeHelper.applyUpgrade(megaSaddle, upgrade);
+            }
+            list.add(megaSaddle);
         }
     };
+
+    @GameRegistry.ObjectHolder("crumbling_magma")
+    public static Block blockCrumblingMagma;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -78,6 +88,8 @@ public class HorseTweaks {
         MinecraftForge.EVENT_BUS.register(new SyncHorseDataHandler());
         MinecraftForge.EVENT_BUS.register(new LeafWalkerHandler());
         MinecraftForge.EVENT_BUS.register(new PlayerTickHandler());
+        MinecraftForge.EVENT_BUS.register(new RejectPigSaddlesHandler());
+        MinecraftForge.EVENT_BUS.register(new FireResistanceHandler());
 
         proxy.preInit();
 
@@ -104,6 +116,11 @@ public class HorseTweaks {
         for (HorseUpgrade upgrade : HorseUpgrade.values) {
             event.getMap().registerSprite(new ResourceLocation(MOD_ID, "items/" + upgrade.name().toLowerCase(Locale.ENGLISH)));
         }
+    }
+
+    @SubscribeEvent
+    public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
+        event.getRegistry().register(new BlockCrumblingMagma().setRegistryName(MOD_ID, "crumbling_magma"));
     }
 
     @SubscribeEvent

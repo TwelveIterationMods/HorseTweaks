@@ -2,7 +2,7 @@
 {
   "modid": "horsetweaks",
   "name": "Horse Tweaks",
-  "description": "",
+  "description": "Adds upgrades for horse saddles, such as frost walker and feather fall. Plus minor tweaks for convenience.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",

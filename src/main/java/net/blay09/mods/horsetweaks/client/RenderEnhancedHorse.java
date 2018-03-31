@@ -24,6 +24,7 @@ public class RenderEnhancedHorse extends RenderHorse {
     private final ItemStack FEATHER = new ItemStack(Items.FEATHER);
     private final ItemStack CACTUS = new ItemStack(Blocks.CACTUS);
     private final ItemStack LEAVES = new ItemStack(Blocks.LEAVES);
+    private final ItemStack MAGMA_CREAM = new ItemStack(Items.MAGMA_CREAM);
 
     public RenderEnhancedHorse(RenderManager renderManager) {
         super(renderManager);
@@ -48,6 +49,10 @@ public class RenderEnhancedHorse extends RenderHorse {
             renderEasyJump();
         }
 
+        if (upgradeList.contains(HorseUpgrade.FROST_WALKER)) {
+            renderFrostWalker();
+        }
+
         if (upgradeList.contains(HorseUpgrade.SWIMMING)) {
             renderSwimming();
         }
@@ -60,12 +65,12 @@ public class RenderEnhancedHorse extends RenderHorse {
             renderLeafWalker();
         }
 
-        if (upgradeList.contains(HorseUpgrade.FROST_WALKER)) {
-            renderFrostWalker();
-        }
-
         if (upgradeList.contains(HorseUpgrade.THORNS)) {
             renderThorns();
+        }
+
+        if (upgradeList.contains(HorseUpgrade.FIRE_RESISTANCE)) {
+            renderFireResistance();
         }
 
         GlStateManager.popMatrix();
@@ -141,6 +146,15 @@ public class RenderEnhancedHorse extends RenderHorse {
         GlStateManager.rotate(180f, 0f, 0f, 1f);
         GlStateManager.scale(1.101f, 1f, 1.025f);
         model.renderMainSaddle();
+        GlStateManager.popMatrix();
+    }
+
+    public void renderFireResistance() {
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(0f, 1.225f, 0.55f);
+        GlStateManager.rotate(90f, 0f, 1f, 0f);
+        GlStateManager.scale(1.1f, 1f, 1.25f);
+        Minecraft.getMinecraft().getRenderItem().renderItem(MAGMA_CREAM, ItemCameraTransforms.TransformType.FIXED);
         GlStateManager.popMatrix();
     }
 
