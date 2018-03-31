@@ -6,7 +6,8 @@
   "upgrade": "frost_walker",
   "ingredients": [
     {
-      "item": "minecraft:saddle"
+      "item": "minecraft:saddle",
+      "data": 32767
     },
     {
       "type": "minecraft:item_nbt",

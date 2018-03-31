@@ -6,7 +6,8 @@
   "upgrade": "swimming",
   "ingredients": [
     {
-      "item": "minecraft:saddle"
+      "item": "minecraft:saddle",
+      "data": 32767
     },
     {
       "type": "forge:ore_dict",

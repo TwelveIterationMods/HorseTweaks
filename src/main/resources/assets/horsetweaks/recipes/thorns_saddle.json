@@ -6,7 +6,8 @@
   "upgrade": "thorns",
   "ingredients": [
     {
-      "item": "minecraft:saddle"
+      "item": "minecraft:saddle",
+      "data": 32767
     },
     {
       "item": "minecraft:cactus"

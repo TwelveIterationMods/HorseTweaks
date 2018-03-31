@@ -6,7 +6,8 @@
   "upgrade": "feather_fall",
   "ingredients": [
     {
-      "item": "minecraft:saddle"
+      "item": "minecraft:saddle",
+      "data": 32767
     },
     {
       "item": "minecraft:feather"

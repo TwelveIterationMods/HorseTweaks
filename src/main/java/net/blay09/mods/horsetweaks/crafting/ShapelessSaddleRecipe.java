@@ -1,16 +1,13 @@
 package net.blay09.mods.horsetweaks.crafting;
 
-import com.google.gson.*;
 import net.blay09.mods.horsetweaks.HorseUpgrade;
 import net.blay09.mods.horsetweaks.HorseUpgradeHelper;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.JsonUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.crafting.JsonContext;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import javax.annotation.Nullable;
@@ -25,6 +22,7 @@ public class ShapelessSaddleRecipe extends ShapelessOreRecipe {
         if (upgrade != null) {
             output = HorseUpgradeHelper.applyUpgrade(output, upgrade);
         }
+        isSimple = false;
     }
 
     @Override

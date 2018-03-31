@@ -107,11 +107,6 @@ public class HorseTweaks {
     }
 
     @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event) {
-        // ModelLoader.registerItemVariants(Items.SADDLE, new ResourceLocation());
-    }
-
-    @SubscribeEvent
     public static void bakeModels(ModelBakeEvent event) {
         ItemLayerModel model = new ItemLayerModel(ImmutableList.of(new ResourceLocation("minecraft", "items/saddle")), new SaddleItemOverrides(Collections.emptyList()));
         Function<ResourceLocation, TextureAtlasSprite> textureGetter = location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
