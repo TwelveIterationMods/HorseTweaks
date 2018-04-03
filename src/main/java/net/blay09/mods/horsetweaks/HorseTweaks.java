@@ -1,24 +1,13 @@
 package net.blay09.mods.horsetweaks;
 
-import com.google.common.collect.ImmutableList;
 import net.blay09.mods.horsetweaks.blocks.BlockCrumblingMagma;
-import net.blay09.mods.horsetweaks.client.SaddleItemOverrides;
 import net.blay09.mods.horsetweaks.tweaks.*;
 import net.blay09.mods.horsetweaks.network.NetworkHandler;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.client.model.ItemLayerModel;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
@@ -32,10 +21,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
-
-import java.util.Collections;
-import java.util.Locale;
-import java.util.function.Function;
 
 @Mod(modid = HorseTweaks.MOD_ID, name = "Horse Tweaks")
 @Mod.EventBusSubscriber
@@ -89,7 +74,7 @@ public class HorseTweaks {
         MinecraftForge.EVENT_BUS.register(new LeafWalkerHandler());
         MinecraftForge.EVENT_BUS.register(new PlayerTickHandler());
         MinecraftForge.EVENT_BUS.register(new RejectPigSaddlesHandler());
-        MinecraftForge.EVENT_BUS.register(new FireResistanceHandler());
+        MinecraftForge.EVENT_BUS.register(new FireWalkerHandler());
 
         proxy.preInit();
 
@@ -112,23 +97,10 @@ public class HorseTweaks {
     }
 
     @SubscribeEvent
-    public static void onStitch(TextureStitchEvent.Pre event) {
-        for (HorseUpgrade upgrade : HorseUpgrade.values) {
-            event.getMap().registerSprite(new ResourceLocation(MOD_ID, "items/" + upgrade.name().toLowerCase(Locale.ENGLISH)));
-        }
-    }
-
-    @SubscribeEvent
     public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
         event.getRegistry().register(new BlockCrumblingMagma().setRegistryName(MOD_ID, "crumbling_magma"));
     }
 
-    @SubscribeEvent
-    public static void bakeModels(ModelBakeEvent event) {
-        ItemLayerModel model = new ItemLayerModel(ImmutableList.of(new ResourceLocation("minecraft", "items/saddle")), new SaddleItemOverrides(Collections.emptyList()));
-        Function<ResourceLocation, TextureAtlasSprite> textureGetter = location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
-        IBakedModel bakedModel = model.bake(model.getDefaultState(), DefaultVertexFormats.ITEM, textureGetter);
-        event.getModelRegistry().putObject(new ModelResourceLocation(new ResourceLocation(MOD_ID, "modded_saddle"), "inventory"), bakedModel);
-    }
+
 
 }

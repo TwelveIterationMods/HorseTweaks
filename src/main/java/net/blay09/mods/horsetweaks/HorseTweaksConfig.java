@@ -39,7 +39,7 @@ public class HorseTweaksConfig {
 
     @Config.Name("Saddle Durability")
     @Config.Comment("Amount of durability points for a saddle. Saddles receive damage every time their special abilities are used. Set to 0 for infinite durability.")
-    public static int saddleDurability = 600;
+    public static int saddleDurability = 1000;
 
     @Config.Name("Render Upgrades on Horse")
     @Config.Comment("Set to false if you don't want the saddle upgrades to be rendered on the horse model.")

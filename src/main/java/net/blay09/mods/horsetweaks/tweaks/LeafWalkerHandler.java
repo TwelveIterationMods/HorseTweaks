@@ -8,6 +8,7 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.world.GetCollisionBoxesEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -31,7 +32,7 @@ public class LeafWalkerHandler {
         boolean foundOne = false;
         for (int i = collisions.size() - 1; i >= 0; i--) {
             AxisAlignedBB aabb = collisions.get(i);
-            BlockPos pos = new BlockPos(aabb.getCenter());
+            BlockPos pos = new BlockPos(aabb.minX + (aabb.maxX - aabb.minX) * 0.5f, aabb.minY + (aabb.maxY - aabb.minY) * 0.5f, aabb.minZ + (aabb.maxZ - aabb.minZ) * 0.5f);
             IBlockState state = event.getWorld().getBlockState(pos);
             if (state.getBlock().isLeaves(state, event.getWorld(), pos) && event.getEntity().posY < aabb.maxY) {
                 event.getCollisionBoxesList().remove(i);
