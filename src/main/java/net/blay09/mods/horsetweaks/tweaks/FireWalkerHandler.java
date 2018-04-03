@@ -8,7 +8,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -20,14 +20,14 @@ public class FireWalkerHandler {
 
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Entity entity = event.player.getRidingEntity();
-        if (entity instanceof EntityHorse && HorseUpgradeHelper.hasUpgrade((EntityHorse) entity, HorseUpgrade.FIRE_RESISTANCE)) {
+        if (entity instanceof AbstractHorse && HorseUpgradeHelper.hasUpgrade((AbstractHorse) entity, HorseUpgrade.FIRE_RESISTANCE)) {
             entity.isImmuneToFire = true;
 
-            solidifyNearby((EntityHorse) entity, entity.world, entity.getPosition());
+            solidifyNearby((AbstractHorse) entity, entity.world, entity.getPosition());
 
 
             if (entity.ticksExisted % 20 == 0 && entity.world.getBlockState(entity.getPosition().down()).getBlock() == HorseTweaks.blockCrumblingMagma) {
-                HorseUpgradeHelper.damageSaddle((EntityHorse) entity);
+                HorseUpgradeHelper.damageSaddle((AbstractHorse) entity);
             }
         }
     }

@@ -1,7 +1,7 @@
 package net.blay09.mods.horsetweaks;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -57,12 +57,12 @@ public class HorseUpgradeHelper {
         return result;
     }
 
-    public static boolean hasUpgrade(EntityHorse horse, HorseUpgrade upgrade) {
+    public static boolean hasUpgrade(AbstractHorse horse, HorseUpgrade upgrade) {
         ItemStack saddle = horse.horseChest.getStackInSlot(0);
         return hasUpgrade(saddle, upgrade);
     }
 
-    public static void damageSaddle(EntityHorse horse) {
+    public static void damageSaddle(AbstractHorse horse) {
         if (HorseTweaksConfig.saddleDurability == 0) {
             return;
         }

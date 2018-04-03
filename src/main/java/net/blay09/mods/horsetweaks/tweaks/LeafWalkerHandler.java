@@ -4,11 +4,10 @@ import net.blay09.mods.horsetweaks.HorseTweaksConfig;
 import net.blay09.mods.horsetweaks.HorseUpgrade;
 import net.blay09.mods.horsetweaks.HorseUpgradeHelper;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.world.GetCollisionBoxesEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -18,11 +17,11 @@ public class LeafWalkerHandler {
 
     @SubscribeEvent
     public void getCollisionBoxes(GetCollisionBoxesEvent event) {
-        if (event.getEntity() == null || !event.getEntity().isBeingRidden() || !(event.getEntity() instanceof EntityHorse)) {
+        if (event.getEntity() == null || !event.getEntity().isBeingRidden() || !(event.getEntity() instanceof AbstractHorse)) {
             return;
         }
 
-        EntityHorse horse = (EntityHorse) event.getEntity();
+        AbstractHorse horse = (AbstractHorse) event.getEntity();
         ItemStack saddle = horse.horseChest.getStackInSlot(0);
         if (!HorseTweaksConfig.leafWalkerByDefault && !HorseUpgradeHelper.hasUpgrade(saddle, HorseUpgrade.LEAF_WALKER)) {
             return;

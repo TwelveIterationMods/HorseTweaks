@@ -1,7 +1,7 @@
 package net.blay09.mods.horsetweaks.tweaks;
 
 import net.blay09.mods.horsetweaks.HorseTweaksConfig;
-import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.init.Items;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -15,8 +15,8 @@ public class UnmountSetHomeHandler {
             return;
         }
 
-        if (event.isDismounting() && event.getEntityBeingMounted() instanceof EntityHorse) {
-            EntityHorse horse = (EntityHorse) event.getEntityBeingMounted();
+        if (event.isDismounting() && event.getEntityBeingMounted() instanceof AbstractHorse) {
+            AbstractHorse horse = (AbstractHorse) event.getEntityBeingMounted();
             if (horse.isTame() && horse.isHorseSaddled()) {
                 horse.setHomePosAndDistance(event.getEntityBeingMounted().getPosition(), 16);
             }
@@ -28,8 +28,8 @@ public class UnmountSetHomeHandler {
         if (!HorseTweaksConfig.setHomeOnDismount) {
             return;
         }
-        if (event.getItemStack().getItem() == Items.LEAD && event.getTarget() instanceof EntityHorse) {
-            EntityHorse horse = (EntityHorse) event.getTarget();
+        if (event.getItemStack().getItem() == Items.LEAD && event.getTarget() instanceof AbstractHorse) {
+            AbstractHorse horse = (AbstractHorse) event.getTarget();
             if (horse.hasHome()) {
                 horse.detachHome();
             }

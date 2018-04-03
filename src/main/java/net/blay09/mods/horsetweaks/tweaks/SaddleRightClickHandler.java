@@ -1,7 +1,7 @@
 package net.blay09.mods.horsetweaks.tweaks;
 
 import net.blay09.mods.horsetweaks.HorseTweaksConfig;
-import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.HorseArmorType;
 import net.minecraft.item.ItemSaddle;
 import net.minecraft.item.ItemStack;
@@ -18,8 +18,8 @@ public class SaddleRightClickHandler {
             return;
         }
 
-        if (event.getTarget() instanceof EntityHorse) {
-            EntityHorse horse = (EntityHorse) event.getTarget();
+        if (event.getTarget() instanceof AbstractHorse) {
+            AbstractHorse horse = (AbstractHorse) event.getTarget();
             if (HorseTweaksConfig.instantTameInCreative && !horse.isTame() && !(event.getEntityPlayer() instanceof FakePlayer) && event.getEntityPlayer().capabilities.isCreativeMode) {
                 horse.setTamedBy(event.getEntityPlayer());
             }
@@ -31,7 +31,7 @@ public class SaddleRightClickHandler {
                         event.setCanceled(true);
                         event.setCancellationResult(EnumActionResult.SUCCESS);
                     }
-                } else if (HorseArmorType.isHorseArmor(event.getItemStack().getItem())) {
+                } else if (horse.wearsArmor() && HorseArmorType.isHorseArmor(event.getItemStack().getItem())) {
                     if (horse.horseChest.getStackInSlot(1).isEmpty()) {
                         ItemStack horseArmor = event.getItemStack().splitStack(1);
                         horse.horseChest.setInventorySlotContents(1, horseArmor);

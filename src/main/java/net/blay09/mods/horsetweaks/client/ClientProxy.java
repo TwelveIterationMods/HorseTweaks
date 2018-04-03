@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -49,8 +49,8 @@ public class ClientProxy extends CommonProxy {
     public void receivedHorseData(int entityId, ItemStack saddle) {
         World world = Minecraft.getMinecraft().world;
         Entity entity = world.getEntityByID(entityId);
-        if (entity instanceof EntityHorse) {
-            EntityHorse horse = (EntityHorse) entity;
+        if (entity instanceof AbstractHorse) {
+            AbstractHorse horse = (AbstractHorse) entity;
             horse.horseChest.setInventorySlotContents(0, saddle);
         }
     }

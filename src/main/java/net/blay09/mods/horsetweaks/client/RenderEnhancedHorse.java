@@ -6,9 +6,10 @@ import net.blay09.mods.horsetweaks.HorseUpgradeHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.entity.RenderAbstractHorse;
 import net.minecraft.client.renderer.entity.RenderHorse;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -16,7 +17,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.EnumSet;
 
-public class RenderEnhancedHorse extends RenderHorse {
+public class RenderEnhancedHorse extends RenderAbstractHorse {
 
     private static final ModelSaddleUpgrades model = new ModelSaddleUpgrades();
     private static final ResourceLocation texture = new ResourceLocation(HorseTweaks.MOD_ID, "textures/entity/horse_upgrades.png");
@@ -30,7 +31,7 @@ public class RenderEnhancedHorse extends RenderHorse {
         super(renderManager);
     }
 
-    public void renderUpgrades(EntityHorse entity, double x, double y, double z, float partialTicks) {
+    public void renderUpgrades(AbstractHorse entity, double x, double y, double z, float partialTicks) {
         ItemStack saddle = entity.horseChest.getStackInSlot(0);
         EnumSet<HorseUpgrade> upgradeList = HorseUpgradeHelper.getUpgrades(saddle);
         if (upgradeList.isEmpty()) {
