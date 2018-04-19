@@ -20,11 +20,10 @@ public class FireWalkerHandler {
 
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Entity entity = event.player.getRidingEntity();
-        if (entity instanceof AbstractHorse && HorseUpgradeHelper.hasUpgrade((AbstractHorse) entity, HorseUpgrade.FIRE_RESISTANCE)) {
+        if (event.phase == TickEvent.Phase.END && entity instanceof AbstractHorse && HorseUpgradeHelper.hasUpgrade((AbstractHorse) entity, HorseUpgrade.FIRE_RESISTANCE)) {
             entity.isImmuneToFire = true;
 
             solidifyNearby((AbstractHorse) entity, entity.world, entity.getPosition());
-
 
             if (entity.ticksExisted % 20 == 0 && entity.world.getBlockState(entity.getPosition().down()).getBlock() == HorseTweaks.blockCrumblingMagma) {
                 HorseUpgradeHelper.damageSaddle((AbstractHorse) entity);

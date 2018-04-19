@@ -12,7 +12,7 @@ public class FrostWalkerHandler {
 
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Entity entity = event.player.getRidingEntity();
-        if (entity instanceof AbstractHorse && HorseUpgradeHelper.hasUpgrade((AbstractHorse) entity, HorseUpgrade.FROST_WALKER)) {
+        if (event.phase == TickEvent.Phase.END && entity instanceof AbstractHorse && HorseUpgradeHelper.hasUpgrade((AbstractHorse) entity, HorseUpgrade.FROST_WALKER)) {
             EnchantmentFrostWalker.freezeNearby((AbstractHorse) entity, entity.world, entity.getPosition(), 1);
 
             if (entity.ticksExisted % 20 == 0 && entity.world.getBlockState(entity.getPosition().down()).getBlock() == Blocks.FROSTED_ICE) {
