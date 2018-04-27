@@ -25,6 +25,10 @@ public class PlayerTickHandler {
             if (horse.isInWater() && horse.ticksExisted % 20 == 0 && HorseUpgradeHelper.hasUpgrade(horse, HorseUpgrade.SWIMMING)) {
                 HorseUpgradeHelper.damageSaddle(horse);
             }
+
+            if (!horse.onGround && horse.fallDistance == 0f && horse.ticksExisted % 5 == 0 && HorseUpgradeHelper.hasUpgrade(horse, HorseUpgrade.EASY_JUMP)) {
+                HorseUpgradeHelper.damageSaddle(horse);
+            }
         }
     }
 
