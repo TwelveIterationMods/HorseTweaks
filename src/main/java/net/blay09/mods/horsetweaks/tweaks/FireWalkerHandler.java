@@ -3,6 +3,7 @@ package net.blay09.mods.horsetweaks.tweaks;
 import net.blay09.mods.horsetweaks.HorseTweaks;
 import net.blay09.mods.horsetweaks.HorseUpgrade;
 import net.blay09.mods.horsetweaks.HorseUpgradeHelper;
+import net.blay09.mods.horsetweaks.blocks.BlockCrumblingMagma;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -41,8 +42,10 @@ public class FireWalkerHandler {
                 IBlockState stateAbove = world.getBlockState(mutPosAbove);
                 if (stateAbove.getMaterial() == Material.AIR) {
                     IBlockState state = world.getBlockState(entry);
-                    if (state.getBlock() == Blocks.LAVA || state.getBlock() == Blocks.FLOWING_LAVA && state.getValue(BlockLiquid.LEVEL) == 0 && world.mayPlace(HorseTweaks.blockCrumblingMagma, entry, false, EnumFacing.DOWN, null)) {
-                        world.setBlockState(entry, HorseTweaks.blockCrumblingMagma.getDefaultState());
+                    boolean isLava = state.getBlock() == Blocks.LAVA || state.getBlock() == Blocks.FLOWING_LAVA;
+                    if (isLava && world.mayPlace(HorseTweaks.blockCrumblingMagma, entry, false, EnumFacing.DOWN, null)) {
+                        boolean isSource = state.getValue(BlockLiquid.LEVEL) == 0;
+                        world.setBlockState(entry, HorseTweaks.blockCrumblingMagma.getDefaultState().withProperty(BlockCrumblingMagma.SOURCE, isSource));
                         world.scheduleUpdate(entry.toImmutable(), HorseTweaks.blockCrumblingMagma, MathHelper.getInt(entity.getRNG(), 60, 120));
                     }
                 }

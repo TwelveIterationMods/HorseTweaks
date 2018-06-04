@@ -2,8 +2,10 @@ package net.blay09.mods.horsetweaks.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFrostedIce;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockMagma;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -20,19 +22,28 @@ import java.util.Random;
 public class BlockCrumblingMagma extends BlockMagma {
 
     public static final PropertyInteger AGE = BlockFrostedIce.AGE;
+    public static final PropertyBool SOURCE = PropertyBool.create("source");
 
     public BlockCrumblingMagma() {
-        setDefaultState(blockState.getBaseState().withProperty(AGE, 0));
+        setDefaultState(blockState.getBaseState()
+                .withProperty(AGE, 0)
+                .withProperty(SOURCE, false));
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(AGE);
+        int meta = state.getValue(AGE) & 3;
+        if (state.getValue(SOURCE)) {
+            meta |= 4;
+        }
+        return meta;
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(AGE, MathHelper.clamp(meta, 0, 3));
+        return getDefaultState()
+                .withProperty(AGE, MathHelper.clamp(meta & 3, 0, 3))
+                .withProperty(SOURCE, (meta & 4) == 4);
     }
 
     @Override
@@ -55,8 +66,10 @@ public class BlockCrumblingMagma extends BlockMagma {
     }
 
     private void turnIntoLava(World world, BlockPos pos) {
-        dropBlockAsItem(world, pos, world.getBlockState(pos), 0);
-        world.setBlockState(pos, Blocks.LAVA.getDefaultState());
+        IBlockState state = world.getBlockState(pos);
+        dropBlockAsItem(world, pos, state, 0);
+        boolean isSource = state.getValue(SOURCE);
+        world.setBlockState(pos, isSource ? Blocks.LAVA.getDefaultState() : Blocks.LAVA.getDefaultState().withProperty(BlockLiquid.LEVEL, 1));
         world.neighborChanged(pos, Blocks.LAVA, pos);
     }
 
@@ -100,7 +113,7 @@ public class BlockCrumblingMagma extends BlockMagma {
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, AGE);
+        return new BlockStateContainer(this, AGE, SOURCE);
     }
 
     @Override

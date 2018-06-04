@@ -25,6 +25,12 @@
           "all": "horsetweaks:blocks/crumbling_magma_3"
         }
       }
+    },
+    "source": {
+      "true": {
+      },
+      "false": {
+      }
     }
   }
 }
