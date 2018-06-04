@@ -18,11 +18,19 @@ public class SyncHorseDataHandler {
         if (event.getEntity() instanceof AbstractHorse) {
             AbstractHorse horse = (AbstractHorse) event.getEntity();
             if (!event.getWorld().isRemote) {
+                if (HorseUpgradeHelper.hasUpgrade(horse, HorseUpgrade.FIRE_RESISTANCE)) {
+                    horse.isImmuneToFire = true;
+                }
+
                 horse.horseChest.addInventoryChangeListener(invBasic -> {
                     if (!horse.world.isRemote) {
                         EntityTracker tracker = ((WorldServer) horse.world).getEntityTracker();
                         for (EntityPlayer player : tracker.getTrackingPlayers(horse)) {
                             NetworkHandler.instance.sendTo(getHorseDataMessage(horse), (EntityPlayerMP) player);
+                        }
+
+                        if (!HorseUpgradeHelper.hasUpgrade(horse, HorseUpgrade.FIRE_RESISTANCE)) {
+                            horse.isImmuneToFire = false;
                         }
                     }
                 });
