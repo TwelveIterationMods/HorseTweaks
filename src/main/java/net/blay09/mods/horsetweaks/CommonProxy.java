@@ -10,6 +10,6 @@ public class CommonProxy {
     public void init() {
     }
 
-    public void receivedHorseData(int entityId, ItemStack saddle) {
+    public void receivedHorseData(int entityId, ItemStack saddle, ItemStack armor) {
     }
 }

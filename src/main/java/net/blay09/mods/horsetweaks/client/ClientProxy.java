@@ -46,12 +46,13 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void receivedHorseData(int entityId, ItemStack saddle) {
+    public void receivedHorseData(int entityId, ItemStack saddle, ItemStack armor) {
         World world = Minecraft.getMinecraft().world;
         Entity entity = world.getEntityByID(entityId);
         if (entity instanceof AbstractHorse) {
             AbstractHorse horse = (AbstractHorse) entity;
             horse.horseChest.setInventorySlotContents(0, saddle);
+            horse.horseChest.setInventorySlotContents(1, armor);
         }
     }
 

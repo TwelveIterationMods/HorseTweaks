@@ -13,7 +13,7 @@ public class HorseDataHandler implements IMessageHandler<HorseDataMessage, IMess
     @Nullable
     public IMessage onMessage(HorseDataMessage message, MessageContext ctx) {
         NetworkHandler.getThreadListener(ctx).addScheduledTask(() -> {
-            HorseTweaks.proxy.receivedHorseData(message.entityId, message.saddle);
+            HorseTweaks.proxy.receivedHorseData(message.entityId, message.saddle, message.armor);
         });
         return null;
     }

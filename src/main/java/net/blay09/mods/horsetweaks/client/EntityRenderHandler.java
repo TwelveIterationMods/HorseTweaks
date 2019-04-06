@@ -16,7 +16,7 @@ public class EntityRenderHandler {
             return;
         }
 
-        if(renderer == null) {
+        if (renderer == null) {
             renderer = new RenderEnhancedHorse(Minecraft.getMinecraft().getRenderManager());
         }
 

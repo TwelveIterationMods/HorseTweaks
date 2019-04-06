@@ -47,6 +47,6 @@ public class SyncHorseDataHandler {
     }
 
     private HorseDataMessage getHorseDataMessage(AbstractHorse horse) {
-        return new HorseDataMessage(horse.getEntityId(), horse.horseChest.getStackInSlot(0));
+        return new HorseDataMessage(horse.getEntityId(), horse.horseChest.getStackInSlot(0), horse.horseChest.getStackInSlot(1));
     }
 }
