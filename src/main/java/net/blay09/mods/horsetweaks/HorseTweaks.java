@@ -1,106 +1,75 @@
 package net.blay09.mods.horsetweaks;
 
-import net.blay09.mods.horsetweaks.blocks.BlockCrumblingMagma;
-import net.blay09.mods.horsetweaks.tweaks.*;
+import net.blay09.mods.horsetweaks.block.ModBlocks;
+import net.blay09.mods.horsetweaks.item.ModItems;
 import net.blay09.mods.horsetweaks.network.NetworkHandler;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Config;
-import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = HorseTweaks.MOD_ID, name = "Horse Tweaks")
-@Mod.EventBusSubscriber
+@Mod(HorseTweaks.MOD_ID)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class HorseTweaks {
 
     public static final String MOD_ID = "horsetweaks";
 
-    private static Logger logger;
+    public static Logger logger = LogManager.getLogger();
 
-    @SidedProxy(serverSide = "net.blay09.mods.horsetweaks.CommonProxy", clientSide = "net.blay09.mods.horsetweaks.client.ClientProxy")
-    public static CommonProxy proxy;
-
-    public static CreativeTabs CREATIVE_TAB = new CreativeTabs(MOD_ID) {
+    public static final ItemGroup itemGroup = new ItemGroup(MOD_ID) {
         @Override
-        public ItemStack getTabIconItem() {
+        public ItemStack createIcon() {
             return new ItemStack(Items.SADDLE);
         }
 
         @Override
-        public void displayAllRelevantItems(NonNullList<ItemStack> list) {
+        public void fill(NonNullList<ItemStack> items) {
             ItemStack saddle = new ItemStack(Items.SADDLE);
-            list.add(saddle);
+            items.add(saddle);
 
             for (HorseUpgrade upgrade : HorseUpgrade.values) {
-                list.add(HorseUpgradeHelper.applyUpgrade(saddle.copy(), upgrade));
+                items.add(HorseUpgradeHelper.applyUpgrade(saddle.copy(), upgrade));
             }
 
             ItemStack megaSaddle = saddle.copy();
             for (HorseUpgrade upgrade : HorseUpgrade.values) {
                 HorseUpgradeHelper.applyUpgrade(megaSaddle, upgrade);
             }
-            list.add(megaSaddle);
+            items.add(megaSaddle);
         }
     };
 
-    @GameRegistry.ObjectHolder("crumbling_magma")
-    public static Block blockCrumblingMagma;
+    public HorseTweaks() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        logger = event.getModLog();
-
-        MinecraftForge.EVENT_BUS.register(new CreativeInstantTamingHandler());
-        MinecraftForge.EVENT_BUS.register(new LeadNoDropHandler());
-        MinecraftForge.EVENT_BUS.register(new SaddleRightClickHandler());
-        MinecraftForge.EVENT_BUS.register(new UnmountSetHomeHandler());
-        MinecraftForge.EVENT_BUS.register(new ThornsHandler());
-        MinecraftForge.EVENT_BUS.register(new FrostWalkerHandler());
-        MinecraftForge.EVENT_BUS.register(new FeatherFallHandler());
-        MinecraftForge.EVENT_BUS.register(new SyncHorseDataHandler());
-        MinecraftForge.EVENT_BUS.register(new LeafWalkerHandler());
-        MinecraftForge.EVENT_BUS.register(new PlayerTickHandler());
-        MinecraftForge.EVENT_BUS.register(new RejectPigSaddlesHandler());
-        MinecraftForge.EVENT_BUS.register(new FireWalkerHandler());
-
-        proxy.preInit();
-
-        NetworkHandler.init();
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, HorseTweaksConfig.commonSpec);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, HorseTweaksConfig.clientSpec);
     }
 
-    @EventHandler
-    public void init(FMLInitializationEvent event) {
-        proxy.init();
-
-        Items.SADDLE.setMaxDamage(HorseTweaksConfig.saddleDurability);
-        Items.SADDLE.setNoRepair();
+    private void setup(FMLCommonSetupEvent event) {
+        event.enqueueWork(NetworkHandler::init);
     }
 
     @SubscribeEvent
-    public static void onConfigChanged(ConfigChangedEvent event) {
-        if (event.getModID().equals(MOD_ID)) {
-            ConfigManager.sync(MOD_ID, Config.Type.INSTANCE);
-        }
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+        ModBlocks.register(event.getRegistry());
     }
 
     @SubscribeEvent
-    public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
-        event.getRegistry().register(new BlockCrumblingMagma().setRegistryName(MOD_ID, "crumbling_magma"));
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+        ModItems.register(event.getRegistry());
+        ModBlocks.registerBlockItems(event.getRegistry());
     }
-
-
 
 }

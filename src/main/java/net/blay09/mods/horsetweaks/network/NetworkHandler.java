@@ -1,29 +1,25 @@
 package net.blay09.mods.horsetweaks.network;
 
 import net.blay09.mods.horsetweaks.HorseTweaks;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.IThreadListener;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 public class NetworkHandler {
 
-    public static SimpleNetworkWrapper instance = new SimpleNetworkWrapper(HorseTweaks.MOD_ID);
+    private static final String version = "1.0";
+
+    public static final SimpleChannel channel = NetworkRegistry.newSimpleChannel(new ResourceLocation(HorseTweaks.MOD_ID, "network"), () -> version, it -> it.equals(version), it -> it.equals(version));
 
     public static void init() {
-        instance.registerMessage(HorseDataHandler.class, HorseDataMessage.class, 0, Side.CLIENT);
+        channel.registerMessage(0, HorseDataMessage.class, HorseDataMessage::encode, HorseDataMessage::decode, HorseDataMessage::handle);
     }
 
-    public static IThreadListener getThreadListener(MessageContext ctx) {
-        return ctx.side == Side.SERVER ? (WorldServer) ctx.getServerHandler().player.world : getClientThreadListener();
-    }
-
-    @SideOnly(Side.CLIENT)
-    public static IThreadListener getClientThreadListener() {
-        return Minecraft.getMinecraft();
+    public static void sendTo(PlayerEntity player, Object message) {
+        channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), message);
     }
 
 }

@@ -1,23 +1,26 @@
 package net.blay09.mods.horsetweaks.tweaks;
 
+import net.blay09.mods.horsetweaks.HorseTweaks;
 import net.blay09.mods.horsetweaks.HorseTweaksConfig;
-import net.minecraft.entity.passive.AbstractHorse;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.EntityMountEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
+@Mod.EventBusSubscriber(modid = HorseTweaks.MOD_ID)
 public class CreativeInstantTamingHandler {
 
     @SubscribeEvent
-    public void onMountHorse(EntityMountEvent event) {
+    public static void onMountHorse(EntityMountEvent event) {
         if (!HorseTweaksConfig.instantTameInCreative) {
             return;
         }
 
-        if (event.getEntityMounting() instanceof EntityPlayer && event.getEntityBeingMounted() instanceof AbstractHorse) {
-            EntityPlayer player = (EntityPlayer) event.getEntityMounting();
-            AbstractHorse horse = (AbstractHorse) event.getEntityBeingMounted();
-            if (player.capabilities.isCreativeMode && !horse.isTame()) {
+        if (event.getEntityMounting() instanceof PlayerEntity && event.getEntityBeingMounted() instanceof AbstractHorseEntity) {
+            PlayerEntity player = (PlayerEntity) event.getEntityMounting();
+            AbstractHorseEntity horse = (AbstractHorseEntity) event.getEntityBeingMounted();
+            if (player.abilities.isCreativeMode && !horse.isTame()) {
                 horse.setTamedBy(player);
             }
         }

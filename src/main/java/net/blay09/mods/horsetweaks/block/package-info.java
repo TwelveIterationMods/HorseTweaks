@@ -1,6 +1,6 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-package net.blay09.mods.horsetweaks.blocks;
+package net.blay09.mods.horsetweaks.block;
 
 import mcp.MethodsReturnNonnullByDefault;
 

@@ -1,26 +1,30 @@
 package net.blay09.mods.horsetweaks.client.tweaks;
 
+import net.blay09.mods.horsetweaks.HorseTweaks;
 import net.blay09.mods.horsetweaks.HorseTweaksConfig;
 import net.blay09.mods.horsetweaks.HorseUpgrade;
 import net.blay09.mods.horsetweaks.HorseUpgradeHelper;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.entity.passive.AbstractHorse;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
+@Mod.EventBusSubscriber(modid = HorseTweaks.MOD_ID, value = Dist.CLIENT)
 public class SwimmingHandler {
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (FMLClientHandler.instance().getClient().isGamePaused()) {
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if (Minecraft.getInstance().isGamePaused()) {
             return;
         }
 
-        EntityPlayerSP player = FMLClientHandler.instance().getClientPlayerEntity();
-        if (player != null && player.getRidingEntity() instanceof AbstractHorse) {
-            AbstractHorse horse = (AbstractHorse) player.getRidingEntity();
-            if ((horse.isInLava() || horse.isInWater()) && (HorseTweaksConfig.swimmingByDefault || HorseUpgradeHelper.hasUpgrade(horse, HorseUpgrade.SWIMMING))) {
+        PlayerEntity player = Minecraft.getInstance().player;
+        if (player != null && player.getRidingEntity() instanceof AbstractHorseEntity) {
+            AbstractHorseEntity horse = (AbstractHorseEntity) player.getRidingEntity();
+            if ((horse.isInLava() || horse.isInWater()) && (HorseTweaksConfig.COMMON.swimmingByDefault.get() || HorseUpgradeHelper.hasUpgrade(horse, HorseUpgrade.SWIMMING))) {
                 horse.addVelocity(0f, 0.0125f, 0f);
             }
         }

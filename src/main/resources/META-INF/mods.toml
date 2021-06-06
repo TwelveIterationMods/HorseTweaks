@@ -1,0 +1,15 @@
+modLoader="javafml"
+loaderVersion="[24,)"
+issueTrackerURL="https://github.com/blay09/HorseTweaks/issues"
+displayURL="https://minecraft.curseforge.com/projects/horse-tweaks"
+authors="BlayTheNinth"
+credits="BlayTheNinth"
+license="MIT"
+
+[[mods]]
+modId="waystones"
+version="${file.jarVersion}"
+displayName="HorseTweaks"
+description='''
+Adds upgrades for horse saddles, such as frost walker and feather fall. Plus minor tweaks for convenience.
+'''

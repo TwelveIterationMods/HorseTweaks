@@ -1,32 +1,29 @@
 package net.blay09.mods.horsetweaks;
 
-import net.blay09.mods.horsetweaks.tweaks.FireWalkerHandler;
-import net.blay09.mods.horsetweaks.tweaks.FrostWalkerHandler;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.AbstractHorse;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.common.Mod;
 
+@Mod.EventBusSubscriber(modid = HorseTweaks.MOD_ID)
 public class PlayerTickHandler {
 
     @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.START) {
             return;
         }
 
-        FrostWalkerHandler.onPlayerTick(event);
-        FireWalkerHandler.onPlayerTick(event);
-
         Entity entity = event.player.getRidingEntity();
-        if (event.side == Side.SERVER && entity instanceof AbstractHorse) {
-            AbstractHorse horse = (AbstractHorse) entity;
+        if (event.side == LogicalSide.SERVER && entity instanceof AbstractHorseEntity) {
+            AbstractHorseEntity horse = (AbstractHorseEntity) entity;
             if (horse.isInWater() && horse.ticksExisted % 20 == 0 && HorseUpgradeHelper.hasUpgrade(horse, HorseUpgrade.SWIMMING)) {
                 HorseUpgradeHelper.damageSaddle(horse);
             }
 
-            if (!horse.onGround && horse.fallDistance == 0f && horse.ticksExisted % 5 == 0 && HorseUpgradeHelper.hasUpgrade(horse, HorseUpgrade.EASY_JUMP)) {
+            if (!horse.isOnGround() && horse.fallDistance == 0f && horse.ticksExisted % 5 == 0 && HorseUpgradeHelper.hasUpgrade(horse, HorseUpgrade.EASY_JUMP)) {
                 HorseUpgradeHelper.damageSaddle(horse);
             }
         }

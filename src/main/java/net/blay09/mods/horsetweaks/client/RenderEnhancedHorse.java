@@ -6,6 +6,7 @@ import net.blay09.mods.horsetweaks.HorseUpgradeHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.entity.AbstractHorseRenderer;
 import net.minecraft.client.renderer.entity.RenderAbstractHorse;
 import net.minecraft.client.renderer.entity.RenderHorse;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -17,7 +18,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.EnumSet;
 
-public class RenderEnhancedHorse extends RenderAbstractHorse {
+public class RenderEnhancedHorse extends AbstractHorseRenderer {
 
     private static final ModelSaddleUpgrades model = new ModelSaddleUpgrades();
     private static final ResourceLocation texture = new ResourceLocation(HorseTweaks.MOD_ID, "textures/entity/horse_upgrades.png");

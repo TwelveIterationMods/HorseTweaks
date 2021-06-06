@@ -1,5 +1,6 @@
 package net.blay09.mods.horsetweaks.tweaks;
 
+import net.blay09.mods.horsetweaks.HorseTweaks;
 import net.blay09.mods.horsetweaks.HorseTweaksConfig;
 import net.blay09.mods.horsetweaks.HorseUpgrade;
 import net.blay09.mods.horsetweaks.HorseUpgradeHelper;
@@ -9,14 +10,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.world.GetCollisionBoxesEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.List;
 
+@Mod.EventBusSubscriber(modid = HorseTweaks.MOD_ID)
 public class LeafWalkerHandler {
 
     @SubscribeEvent
-    public void getCollisionBoxes(GetCollisionBoxesEvent event) {
+    public static void getCollisionBoxes(GetCollisionBoxesEvent event) {
         if (event.getEntity() == null || !event.getEntity().isBeingRidden() || !(event.getEntity() instanceof AbstractHorse)) {
             return;
         }
