@@ -4,6 +4,7 @@ import net.blay09.mods.horsetweaks.HorseTweaks;
 import net.blay09.mods.horsetweaks.HorseUpgrade;
 import net.blay09.mods.horsetweaks.HorseUpgradeHelper;
 import net.blay09.mods.horsetweaks.block.CrumblingMagmaBlock;
+import net.blay09.mods.horsetweaks.block.ModBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
@@ -29,7 +30,7 @@ public class FireWalkerHandler {
 
             solidifyNearby((AbstractHorseEntity) entity, entity.world, entity.getPosition());
 
-            if (entity.ticksExisted % 20 == 0 && entity.world.getBlockState(entity.getPosition().down()).getBlock() == HorseTweaks.blockCrumblingMagma) {
+            if (entity.ticksExisted % 20 == 0 && entity.world.getBlockState(entity.getPosition().down()).getBlock() == ModBlocks.crumblingMagma) {
                 HorseUpgradeHelper.damageSaddle((AbstractHorseEntity) entity);
             }
         }
@@ -39,17 +40,17 @@ public class FireWalkerHandler {
         double range = 3;
         BlockPos.Mutable mutPosAbove = new BlockPos.Mutable();
 
-        for (BlockPos.Mutable entry : BlockPos.getAllInBoxMutable(pos.add(-range, -1, -range), pos.add(range, -1, range))) {
-            if (entry.distanceSqToCenter(entity.posX, entity.posY, entity.posZ) <= (range * range)) {
+        for (BlockPos entry : BlockPos.getAllInBoxMutable(pos.add(-range, -1, -range), pos.add(range, -1, range))) {
+            if (entry.distanceSq(entity.getPosX(), entity.getPosY(), entity.getPosZ(), false) <= (range * range)) {
                 mutPosAbove.setPos(entry.getX(), entry.getY() + 1, entry.getZ());
                 BlockState stateAbove = world.getBlockState(mutPosAbove);
                 if (stateAbove.getMaterial() == Material.AIR) {
                     BlockState state = world.getBlockState(entry);
-                    boolean isLava = state.getBlock() == Blocks.LAVA || state.getBlock() == Blocks.FLOWING_LAVA;
-                    if (isLava && world.mayPlace(HorseTweaks.blockCrumblingMagma, entry, false, Direction.DOWN, null)) {
-                        boolean isSource = state.getValue(BlockLiquid.LEVEL) == 0;
-                        world.setBlockState(entry, HorseTweaks.blockCrumblingMagma.getDefaultState().withProperty(CrumblingMagmaBlock.SOURCE, isSource));
-                        world.scheduleUpdate(entry.toImmutable(), HorseTweaks.blockCrumblingMagma, MathHelper.getInt(entity.getRNG(), 60, 120));
+                    boolean isLava = state.getBlock() == Blocks.LAVA;
+                    if (isLava && world.mayPlace(ModBlocks.crumblingMagma, entry, false, Direction.DOWN, null)) {
+                        boolean isSource = state.get(BlockLiquid.LEVEL) == 0;
+                        world.setBlockState(entry, ModBlocks.crumblingMagma.getDefaultState().with(CrumblingMagmaBlock.SOURCE, isSource));
+                        world.scheduleUpdate(entry.toImmutable(), ModBlocks.crumblingMagma, MathHelper.getInt(entity.getRNG(), 60, 120));
                     }
                 }
             }

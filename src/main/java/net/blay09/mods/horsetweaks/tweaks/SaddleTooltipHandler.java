@@ -6,6 +6,7 @@ import net.blay09.mods.horsetweaks.HorseUpgradeHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Items;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,14 +23,9 @@ public class SaddleTooltipHandler {
         if (event.getItemStack().getItem() == Items.SADDLE) {
             EnumSet<HorseUpgrade> upgradeList = HorseUpgradeHelper.getUpgrades(event.getItemStack());
 
-            // Rename the vanilla saddle item in this tooltip if it's been upgraded
-            if (!upgradeList.isEmpty() && event.getToolTip().size() > 0) {
-                event.getToolTip().set(0, TextFormatting.AQUA + I18n.format("horsetweaks:item.upgraded_saddle"));
-            }
-
             // List the upgrades in the tooltip
             for (HorseUpgrade upgrade : upgradeList) {
-                event.getToolTip().add(I18n.format("horsetweaks:upgrade." + upgrade.name().toLowerCase(Locale.ENGLISH)));
+                event.getToolTip().add(new TranslationTextComponent("horsetweaks.upgrade." + upgrade.name().toLowerCase(Locale.ENGLISH)));
             }
         }
     }

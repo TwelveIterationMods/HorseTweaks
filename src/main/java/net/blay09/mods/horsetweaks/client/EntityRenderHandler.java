@@ -12,16 +12,16 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = HorseTweaks.MOD_ID, value = Dist.CLIENT)
 public class EntityRenderHandler {
 
-    private static RenderEnhancedHorse renderer;
+    private static UpgradedHorseRenderer renderer;
 
     @SubscribeEvent
     public static void renderHorse(RenderLivingEvent.Post<AbstractHorseEntity> event) {
-        if (!HorseTweaksConfig.renderUpgradesOnHorse || !(event.getEntity() instanceof AbstractHorseEntity)) {
+        if (!HorseTweaksConfig.CLIENT.renderUpgradesOnHorse.get() || !(event.getEntity() instanceof AbstractHorseEntity)) {
             return;
         }
 
         if (renderer == null) {
-            renderer = new RenderEnhancedHorse(Minecraft.getInstance().getRenderManager());
+            renderer = new UpgradedHorseRenderer(Minecraft.getInstance().getRenderManager());
         }
 
         AbstractHorseEntity horse = (AbstractHorseEntity) event.getEntity();

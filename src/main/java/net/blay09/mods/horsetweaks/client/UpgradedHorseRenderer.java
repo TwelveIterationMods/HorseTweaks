@@ -3,6 +3,7 @@ package net.blay09.mods.horsetweaks.client;
 import net.blay09.mods.horsetweaks.HorseTweaks;
 import net.blay09.mods.horsetweaks.HorseUpgrade;
 import net.blay09.mods.horsetweaks.HorseUpgradeHelper;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -11,24 +12,26 @@ import net.minecraft.client.renderer.entity.RenderAbstractHorse;
 import net.minecraft.client.renderer.entity.RenderHorse;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.passive.AbstractHorse;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.EnumSet;
 
-public class RenderEnhancedHorse extends AbstractHorseRenderer {
+public class UpgradedHorseRenderer extends AbstractHorseRenderer<AbstractHorseEntity> {
 
     private static final ModelSaddleUpgrades model = new ModelSaddleUpgrades();
     private static final ResourceLocation texture = new ResourceLocation(HorseTweaks.MOD_ID, "textures/entity/horse_upgrades.png");
 
     private final ItemStack FEATHER = new ItemStack(Items.FEATHER);
     private final ItemStack CACTUS = new ItemStack(Blocks.CACTUS);
-    private final ItemStack LEAVES = new ItemStack(Blocks.LEAVES);
+    private final ItemStack LEAVES = new ItemStack(Blocks.OAK_LEAVES);
     private final ItemStack MAGMA_CREAM = new ItemStack(Items.MAGMA_CREAM);
 
-    public RenderEnhancedHorse(RenderManager renderManager) {
+    public UpgradedHorseRenderer(RenderManager renderManager) {
         super(renderManager);
     }
 

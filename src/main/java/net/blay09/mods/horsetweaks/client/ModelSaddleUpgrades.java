@@ -1,9 +1,12 @@
 package net.blay09.mods.horsetweaks.client;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.model.Model;
+import net.minecraft.client.renderer.model.ModelRenderer;
 
-public class ModelSaddleUpgrades extends ModelBase {
+public class ModelSaddleUpgrades extends Model {
 
     public final ModelRenderer horseSaddleBottom;
     public final ModelRenderer horseSaddleFront;
@@ -15,6 +18,7 @@ public class ModelSaddleUpgrades extends ModelBase {
     public final ModelRenderer horseSwimmingPlanks;
 
     public ModelSaddleUpgrades() {
+        super(RenderType::getEntityCutout);
         this.textureWidth = 128;
         this.textureHeight = 128;
 
@@ -41,22 +45,25 @@ public class ModelSaddleUpgrades extends ModelBase {
         this.horseSwimmingPlanks.setRotationPoint(0.0F, 11.0F, 9.0F);
     }
 
-    public void renderMainSaddle() {
-        float scale = 0.0625f;
-        this.horseSaddleBottom.renderWithRotation(scale);
-        this.horseSaddleFront.renderWithRotation(scale);
-        this.horseSaddleBack.renderWithRotation(scale);
+    public void renderMainSaddle(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay) {
+        this.horseSaddleBottom.render(matrixStack, buffer, packedLight, packedOverlay);
+        this.horseSaddleFront.render(matrixStack, buffer, packedLight, packedOverlay);
+        this.horseSaddleBack.render(matrixStack, buffer, packedLight, packedOverlay);
     }
 
-    public void renderFootMetals() {
-        float scale = 0.0625f;
-        this.horseLeftSaddleMetal.renderWithRotation(scale);
-        this.horseRightSaddleMetal.renderWithRotation(scale);
+    public void renderFootMetals(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay) {
+        this.horseLeftSaddleMetal.render(matrixStack, buffer, packedLight, packedOverlay);
+        this.horseRightSaddleMetal.render(matrixStack, buffer, packedLight, packedOverlay);
     }
 
-    public void renderSwimmingPlanks() {
-        float scale = 0.0625f;
-        this.horseSwimmingPlanks.renderWithRotation(scale);
+    public void renderSwimmingPlanks(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay) {
+        this.horseSwimmingPlanks.render(matrixStack, buffer, packedLight, packedOverlay);
     }
 
+    @Override
+    public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        renderMainSaddle(matrixStack, buffer, packedLight, packedOverlay);
+        renderFootMetals(matrixStack, buffer, packedLight, packedOverlay);
+        renderSwimmingPlanks(matrixStack, buffer, packedLight, packedOverlay);
+    }
 }

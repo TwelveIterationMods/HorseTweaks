@@ -16,7 +16,7 @@ public class LeadNoDropHandler {
 
     @SubscribeEvent
     public static void onInteract(PlayerInteractEvent.EntityInteract event) {
-        if (!HorseTweaksConfig.returnLeadsIntoInventory) {
+        if (!HorseTweaksConfig.COMMON.returnLeadsIntoInventory.get()) {
             return;
         }
 
